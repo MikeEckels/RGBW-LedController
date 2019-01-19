@@ -11,7 +11,7 @@ void PinA()
   reading = PIND & 0xC; 
   if(reading == B00001100 && aFlag)
   { 
-    encoderPos = (encoderPos - 15 < 15) ? 15 : encoderPos - 15; 
+    encoderPos = (encoderPos - 5 < 0) ? 0 : encoderPos - 5; 
     bFlag = 0; 
     aFlag = 0; 
   }
@@ -25,7 +25,7 @@ void PinB()
   reading = PIND & 0xC;
   if (reading == B00001100 && bFlag) 
   {
-    encoderPos = (encoderPos + 15 > 255) ? 255 : encoderPos + 15; 
+    encoderPos = (encoderPos + 5 > 255) ? 255 : encoderPos + 5; 
     bFlag = 0;
     aFlag = 0;
   }
@@ -35,7 +35,7 @@ void PinB()
 
 int Encoder(bool dir)
 { //1 to output direction. 0 to output position
-  static int state = 15;
+  static int state = 5;
   if(dir == 1)
   {
     if(encoderPos > oldEncPos) 

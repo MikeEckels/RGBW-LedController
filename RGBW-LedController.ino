@@ -17,7 +17,7 @@ void setup() {
 
   attachInterrupt(0, PinA, RISING);
   attachInterrupt(1, PinB, RISING);
-  //setColourRgb(0,0,0);
+  setColourRgb(0,0,0);
 
   Serial.begin(115200);
 }
@@ -29,15 +29,16 @@ void loop() {
   rgbColour[1] = 0;
   rgbColour[2] = 0;
 
-  Serial.println(counter);
+  if(counter < 10 & (digitalRead(Button)==LOW))
+  {
+    counter++;
+    delay(500);
+  }else if (counter >= 10)
+  {
+    counter = 0;
+  }
 
-if(counter < 10)
-{
-  counter = counter + Encoder(1);
-}else if (counter >= 10)
-{
-  counter = 0;
-}
+  Serial.println(counter);
 
   switch (counter){
     case 0:
@@ -47,27 +48,40 @@ if(counter < 10)
       digitalWrite(bluePin, LOW);
       break;
     case 1:
-      for (int decColour = 0; decColour < 3; decColour += 1) {
-        int incColour = decColour == 2 ? 0 : decColour + 1;
-
-      for(int i = 0; i < 255; i += 1) {
-        rgbColour[decColour] -= 1;
-        rgbColour[incColour] += 1;
-      
-        setColourRgb(rgbColour[0], rgbColour[1], rgbColour[2]);
-        delay(5);
-        }
-      }
+      digitalWrite(whitePin, LOW);
+      analogWrite(redPin, Encoder(0));
+      digitalWrite(greenPin, LOW);
+      digitalWrite(bluePin, LOW);
       break;
     case 2:
+      digitalWrite(whitePin, LOW);
+      digitalWrite(redPin, LOW);
+      analogWrite(greenPin, Encoder(0));
+      digitalWrite(bluePin, LOW);
       break;
     case 3:
+      digitalWrite(whitePin, LOW);
+      digitalWrite(redPin, LOW);
+      digitalWrite(greenPin, LOW);
+      analogWrite(bluePin, Encoder(0));
       break;
     case 4:
+      digitalWrite(whitePin, LOW);
+      analogWrite(redPin, Encoder(0));
+      analogWrite(greenPin, Encoder(0));
+      digitalWrite(bluePin, LOW);
       break;
     case 5:
+      digitalWrite(whitePin, LOW);
+      digitalWrite(redPin, LOW);
+      analogWrite(greenPin, Encoder(0));
+      analogWrite(bluePin, Encoder(0));
       break;
     case 6:
+      analogWrite(whitePin, LOW);
+      analogWrite(redPin, Encoder(0));
+      digitalWrite(greenPin, LOW);
+      analogWrite(bluePin, Encoder(0));
       break;
     case 7:
      break;
@@ -76,6 +90,17 @@ if(counter < 10)
     case 9:
       break;
     case 10:
+      for (int decColour = 0; decColour < 3; decColour += 1) {
+          int incColour = decColour == 2 ? 0 : decColour + 1;
+
+        for(int i = 0; i < 255; i += 1) {
+          rgbColour[decColour] -= 1;
+          rgbColour[incColour] += 1;
+      
+          setColourRgb(rgbColour[0], rgbColour[1], rgbColour[2]);
+          delay(5);
+          }
+        }
       break;
   }
 }
