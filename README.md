@@ -1,2 +1,2 @@
-# StroboscopeMenu
-Custom menu interface based around the U8G2 graphics library
+# RGBW LED Controller
+Controls a strip of red, green, blue, and white LED's with any AVR MCU, and four IRF520 MOSFETS. Outputs on all color channels are independently PWM-able.
